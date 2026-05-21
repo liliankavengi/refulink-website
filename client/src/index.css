@@ -1,0 +1,323 @@
+/*
+ * REFULINK — EMBER MINIMAL DESIGN SYSTEM
+ * Movement: Swiss Typographic + East African warmth
+ * Background: #0A0A0A (warm deep black)
+ * Primary: #FF5722 (orange flame — used sparingly)
+ * Text: #FFFFFF primary, #888888 secondary
+ * Cards: #141414 surface
+ * Font: Inter (sans-serif throughout)
+ */
+
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Refulink custom tokens */
+  --color-orange: #FF5722;
+  --color-orange-dim: rgba(255, 87, 34, 0.12);
+  --color-surface: #141414;
+  --color-surface-2: #1c1c1c;
+  --color-grey-mid: #888888;
+  --color-grey-light: #cccccc;
+}
+
+:root {
+  --radius: 0.25rem;
+  --background: oklch(0.07 0.005 50);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.10 0.004 50);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.10 0.004 50);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.62 0.22 35);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.14 0.004 50);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.14 0.004 50);
+  --muted-foreground: oklch(0.58 0.008 50);
+  --accent: oklch(0.14 0.004 50);
+  --accent-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.22 0.004 50);
+  --input: oklch(0.22 0.004 50);
+  --ring: oklch(0.62 0.22 35);
+  --chart-1: oklch(0.62 0.22 35);
+  --chart-2: oklch(0.55 0.18 35);
+  --chart-3: oklch(0.48 0.14 35);
+  --chart-4: oklch(0.40 0.10 35);
+  --chart-5: oklch(0.32 0.06 35);
+  --sidebar: oklch(0.10 0.004 50);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.62 0.22 35);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.14 0.004 50);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
+  --sidebar-border: oklch(0.22 0.004 50);
+  --sidebar-ring: oklch(0.62 0.22 35);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
+  code, pre, .mono {
+    font-family: monospace;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+      max-width: 1320px;
+    }
+  }
+
+  /* Orange flame accent line */
+  .orange-rule {
+    display: block;
+    width: 4px;
+    background-color: #FF5722;
+    flex-shrink: 0;
+  }
+
+  /* Ghost section number */
+  .ghost-number {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: clamp(6rem, 15vw, 14rem);
+    color: rgba(255, 87, 34, 0.06);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    top: -0.15em;
+    left: -0.05em;
+  }
+
+  /* CTA button — outline fill on hover */
+  .btn-orange {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    border: 1.5px solid #FF5722;
+    color: #FF5722;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    transition: background 200ms cubic-bezier(0.23, 1, 0.32, 1),
+                color 200ms cubic-bezier(0.23, 1, 0.32, 1),
+                transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    text-decoration: none;
+  }
+  .btn-orange:hover {
+    background: #FF5722;
+    color: #000;
+  }
+  .btn-orange:active {
+    transform: scale(0.97);
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    transition: border-color 200ms ease, color 200ms ease, transform 160ms ease;
+    text-decoration: none;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+  }
+  .btn-ghost:active {
+    transform: scale(0.97);
+  }
+
+  /* Team card */
+  .team-card {
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 250ms ease, transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .team-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #FF5722;
+    transition: width 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .team-card:hover {
+    border-color: rgba(255, 87, 34, 0.25);
+    transform: translateY(-3px);
+  }
+  .team-card:hover::after {
+    width: 100%;
+  }
+
+  /* Feature card */
+  .feature-card {
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 250ms ease;
+  }
+  .feature-card:hover {
+    border-color: rgba(255, 87, 34, 0.2);
+  }
+
+  /* Scroll-triggered fade-up */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 280ms cubic-bezier(0.23, 1, 0.32, 1),
+                transform 280ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Nav link */
+  .nav-link {
+    color: rgba(255,255,255,0.55);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 180ms ease;
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #FF5722;
+    transition: width 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .nav-link:hover {
+    color: #fff;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Divider */
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    margin: 0;
+  }
+
+  /* Stat number */
+  .stat-number {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    color: #FF5722;
+    line-height: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    will-change: opacity, transform;
+  }
+}
