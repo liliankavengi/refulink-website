@@ -1,11 +1,12 @@
 /*
- * REFULINK HOME PAGE — EMBER MINIMAL
+ * REF-M-LINK HOME PAGE — EMBER MINIMAL
  * Design: Swiss Typographic + East African warmth
  * Background: #0A0A0A | Primary: #FF5722 | Text: #FFF / #888
  * Font: Inter (sans-serif throughout)
  */
 
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 // ─── Asset URLs ────────────────────────────────────────────────────────────────
 const HERO_IMG =
@@ -22,7 +23,7 @@ const TEAM = [
     contributions: 55,
     avatar: "https://avatars.githubusercontent.com/u/122858862?v=4",
     github: "https://github.com/liliankavengi",
-    bio: "Architect of RefuLink's mission. Driving financial inclusion for refugees through blockchain-powered identity verification and mobile money integration.",
+    bio: "Architect of Ref-M-Link's mission. Driving financial inclusion for refugees through blockchain-powered identity verification and mobile money integration.",
   },
   {
     login: "ben397",
@@ -31,7 +32,7 @@ const TEAM = [
     contributions: 33,
     avatar: "https://avatars.githubusercontent.com/u/64592036?v=4",
     github: "https://github.com/ben397",
-    bio: "Building the backbone of RefuLink. Full-stack expertise in Stellar integration, M-Pesa bridge architecture, and production-grade backend systems.",
+    bio: "Building the backbone of Ref-M-Link. Full-stack expertise in Stellar integration, M-Pesa bridge architecture, and production-grade backend systems.",
   },
   {
     login: "Tums2060",
@@ -49,7 +50,7 @@ const TEAM = [
     contributions: 3,
     avatar: "https://avatars.githubusercontent.com/u/224504936?v=4",
     github: "https://github.com/Joygloria334",
-    bio: "Championing the mission of financial inclusion. Connecting RefuLink with refugee communities and ensuring the platform serves real needs.",
+    bio: "Championing the mission of financial inclusion. Connecting Ref-M-Link with refugee communities and ensuring the platform serves real needs.",
   },
 ];
 
@@ -102,7 +103,7 @@ const STEPS = [
   {
     num: "03",
     title: "Deposit via M-Pesa",
-    desc: "Pay to the RefuLink Paybill. Safaricom Daraja fires a webhook; KES tokens are minted to your Stellar wallet.",
+    desc: "Pay to the Ref-M-Link Paybill. Safaricom Daraja fires a webhook; KES tokens are minted to your Stellar wallet.",
   },
   {
     num: "04",
@@ -136,6 +137,7 @@ function useFadeUp() {
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -169,7 +171,7 @@ function Nav() {
         <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <span style={{ display: "block", width: "4px", height: "28px", background: "#FF5722", flexShrink: 0 }} />
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "1.25rem", color: "#fff", letterSpacing: "0.02em" }}>
-            Refu<span style={{ color: "#FF5722" }}>Link</span>
+            Ref-M-<span style={{ color: "#FF5722" }}>Link</span>
           </span>
         </a>
 
@@ -181,6 +183,36 @@ function Nav() {
           <a href="https://github.com/liliankavengi/refulink" target="_blank" rel="noopener noreferrer" className="btn-orange" style={{ padding: "0.5rem 1.25rem", fontSize: "0.8rem" }}>
             GitHub
           </a>
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle light/dark mode"
+            style={{
+              background: "none",
+              border: "1.5px solid rgba(255,255,255,0.2)",
+              color: theme === "dark" ? "#fff" : "#0A0A0A",
+              width: "36px",
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "border-color 200ms ease, color 200ms ease",
+              flexShrink: 0,
+            }}
+          >
+            {theme === "dark" ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            )}
+          </button>
         </nav>
 
         {/* Mobile hamburger */}
@@ -264,13 +296,7 @@ function Hero() {
         }}
       />
       {/* Dark overlay gradient */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to right, rgba(10,10,10,1) 45%, rgba(10,10,10,0.4) 100%)",
-        }}
-      />
+      <div className="hero-overlay" />
 
       {/* Content */}
       <div
@@ -283,7 +309,6 @@ function Hero() {
           justifyContent: "center",
           paddingTop: "120px",
           paddingBottom: "80px",
-          maxWidth: "760px",
         }}
       >
         {/* Eyebrow */}
@@ -302,11 +327,10 @@ function Hero() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
-            lineHeight: 1.05,
+            fontSize: "clamp(3.5rem, 10vw, 8rem)",
+            lineHeight: 1.0,
             color: "#fff",
             marginBottom: "1.75rem",
-            maxWidth: "680px",
           }}
         >
           Banking for those<br />
@@ -319,14 +343,13 @@ function Hero() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
+            fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
             color: "rgba(255,255,255,0.65)",
             lineHeight: 1.7,
-            maxWidth: "520px",
             marginBottom: "2.5rem",
           }}
         >
-          RefuLink combines RIN identity verification, a Stellar blockchain wallet, and an M-Pesa bridge to give refugees in Kenya a trusted financial identity — and the credit to prove it.
+          Ref-M-Link combines RIN identity verification, a Stellar blockchain wallet, and an M-Pesa bridge to give refugees in Kenya a trusted financial identity — and the credit to prove it.
         </p>
 
         {/* CTAs */}
@@ -336,16 +359,7 @@ function Hero() {
         </div>
 
         {/* Stats */}
-        <div
-          style={{
-            display: "flex",
-            gap: "3rem",
-            marginTop: "4rem",
-            paddingTop: "2rem",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="hero-stats">
           {[
             { val: "96", label: "Commits" },
             { val: "5", label: "Contributors" },
@@ -367,9 +381,9 @@ function Hero() {
 function Mission() {
   const ref = useFadeUp();
   return (
-    <section id="mission" style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section id="mission" className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div
           style={{
             display: "grid",
@@ -389,7 +403,7 @@ function Mission() {
           >
             <img
               src={MISSION_IMG}
-              alt="RefuLink network visualization"
+              alt="Ref-M-Link network visualization"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
             {/* Orange border offset */}
@@ -418,7 +432,7 @@ function Mission() {
                 style={{
                   fontFamily: "'Inter', sans-serif",
                   fontWeight: 800,
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontSize: "clamp(1.8rem, 4vw, 3.5rem)",
                   color: "#fff",
                   lineHeight: 1.15,
                   marginBottom: "1.5rem",
@@ -426,11 +440,11 @@ function Mission() {
                   zIndex: 1,
                 }}
               >
-                A financial identity<br />for every refugee.
+                A financial identity for every refugee.
               </h2>
             </div>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontSize: "1rem", marginBottom: "1.25rem" }}>
-              Over 750,000 refugees live in Kenya. Most are excluded from formal banking because they lack the documentation that traditional institutions require. RefuLink changes that.
+              Over 750,000 refugees live in Kenya. Most are excluded from formal banking because they lack the documentation that traditional institutions require. Ref-M-Link changes that.
             </p>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontSize: "1rem", marginBottom: "2rem" }}>
               By anchoring a refugee's Alien ID (RIN) to a Stellar blockchain identity and connecting it to M-Pesa, we create a verifiable, portable financial record that grows with every transaction.
@@ -443,7 +457,10 @@ function Mission() {
       </div>
       <style>{`
         @media (max-width: 900px) {
-          .mission-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+          .mission-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+        }
+        @media (max-width: 480px) {
+          .mission-grid { gap: 1.75rem !important; }
         }
       `}</style>
     </section>
@@ -454,9 +471,9 @@ function Mission() {
 function Features() {
   const ref = useFadeUp();
   return (
-    <section id="features" style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section id="features" className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div ref={ref} className="fade-up" style={{ marginBottom: "4rem" }}>
           <div style={{ position: "relative" }}>
             <span className="ghost-number">02</span>
@@ -467,15 +484,14 @@ function Features() {
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: 800,
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(1.8rem, 4vw, 3.5rem)",
                 color: "#fff",
                 lineHeight: 1.15,
-                maxWidth: "520px",
                 position: "relative",
                 zIndex: 1,
               }}
             >
-              Built for trust.<br />Designed for access.
+              Built for trust. Designed for access.
             </h2>
           </div>
         </div>
@@ -541,9 +557,9 @@ function FeatureCard({ feature, delay }: { feature: (typeof FEATURES)[0]; delay:
 function HowItWorks() {
   const ref = useFadeUp();
   return (
-    <section id="how-it-works" style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section id="how-it-works" className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div ref={ref} className="fade-up" style={{ marginBottom: "4rem" }}>
           <div style={{ position: "relative" }}>
             <span className="ghost-number">03</span>
@@ -554,15 +570,14 @@ function HowItWorks() {
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: 800,
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(1.8rem, 4vw, 3.5rem)",
                 color: "#fff",
                 lineHeight: 1.15,
-                maxWidth: "520px",
                 position: "relative",
                 zIndex: 1,
               }}
             >
-              From identity<br />to financial freedom.
+              From identity to financial freedom.
             </h2>
           </div>
         </div>
@@ -603,7 +618,7 @@ function StepCard({ step, delay }: { step: (typeof STEPS)[0]; delay: number }) {
   return (
     <div
       ref={ref}
-      className="fade-up"
+      className="fade-up step-card-item"
       style={{
         background: "#141414",
         padding: "2.5rem 2rem",
@@ -641,9 +656,9 @@ function StepCard({ step, delay }: { step: (typeof STEPS)[0]; delay: number }) {
 function Team() {
   const ref = useFadeUp();
   return (
-    <section id="team" style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section id="team" className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div ref={ref} className="fade-up" style={{ marginBottom: "4rem" }}>
           <div style={{ position: "relative" }}>
             <span className="ghost-number">04</span>
@@ -654,15 +669,14 @@ function Team() {
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: 800,
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(1.8rem, 4vw, 3.5rem)",
                 color: "#fff",
                 lineHeight: 1.15,
-                maxWidth: "520px",
                 position: "relative",
                 zIndex: 1,
               }}
             >
-              The builders<br />behind the mission.
+              The builders behind the mission.
             </h2>
           </div>
         </div>
@@ -758,6 +772,8 @@ function TeamCard({ member, delay }: { member: (typeof TEAM)[0]; delay: number }
 }
 
 // ─── Waitlist Section ─────────────────────────────────────────────────────────────
+const FORMSPREE_ID = "xykvjgyw";
+
 function Waitlist() {
   const ref = useFadeUp();
   const [email, setEmail] = useState("");
@@ -770,32 +786,35 @@ function Waitlist() {
 
     setStatus("loading");
     try {
-      // Simulate API call — in production, connect to your backend or email service
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Submission failed");
       setStatus("success");
-      setMessage("Welcome to the RefuLink waitlist! Check your email.");
+      setMessage("Welcome to the Ref-M-Link waitlist! We'll be in touch.");
       setEmail("");
       setTimeout(() => {
         setStatus("idle");
         setMessage("");
       }, 4000);
-    } catch (err) {
+    } catch {
       setStatus("error");
       setMessage("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <section style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div
           ref={ref}
-          className="fade-up"
+          className="fade-up box-pad"
           style={{
             background: "linear-gradient(135deg, rgba(255,87,34,0.08) 0%, rgba(255,87,34,0.02) 100%)",
             border: "1px solid rgba(255,87,34,0.15)",
-            padding: "4rem 3rem",
             maxWidth: "680px",
             margin: "0 auto",
           }}
@@ -823,11 +842,11 @@ function Waitlist() {
               marginBottom: "2rem",
             }}
           >
-            Join the waitlist to be among the first refugees to access RefuLink's financial identity and credit platform.
+            Join the waitlist to be among the first refugees to access Ref-M-Link's financial identity and credit platform.
           </p>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem" }}>
+          <form onSubmit={handleSubmit} className="waitlist-form">
             <input
               type="email"
               placeholder="your@email.com"
@@ -888,21 +907,15 @@ function Waitlist() {
 function CTABanner() {
   const ref = useFadeUp();
   return (
-    <section style={{ padding: "8rem 0", background: "#0A0A0A" }}>
+    <section className="section-pad" style={{ background: "#0A0A0A" }}>
       <hr className="section-divider" />
-      <div className="container" style={{ paddingTop: "6rem" }}>
+      <div className="container section-inner">
         <div
           ref={ref}
-          className="fade-up"
+          className="fade-up box-pad cta-inner"
           style={{
             background: "#141414",
             border: "1px solid rgba(255,87,34,0.2)",
-            padding: "4rem 3rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "2rem",
-            flexWrap: "wrap",
           }}
         >
           <div>
@@ -920,10 +933,10 @@ function CTABanner() {
               <span style={{ color: "#FF5722" }}>Open to contributions.</span>
             </h2>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.5)", fontSize: "1rem", maxWidth: "480px" }}>
-              RefuLink is built in public. Review the architecture, contribute code, or fork the project to adapt it for your region.
+              Ref-M-Link is built in public. Review the architecture, contribute code, or fork the project to adapt it for your region.
             </p>
           </div>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="cta-inner-btns">
             <a href="https://github.com/liliankavengi/refulink" target="_blank" rel="noopener noreferrer" className="btn-orange">
               View on GitHub
             </a>
@@ -941,15 +954,12 @@ function CTABanner() {
 function Footer() {
   return (
     <footer style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.07)", padding: "3rem 0" }}>
-      <div
-        className="container"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}
-      >
+      <div className="container footer-inner">
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <span style={{ display: "block", width: "3px", height: "22px", background: "#FF5722" }} />
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "1rem", color: "#fff" }}>
-            Refu<span style={{ color: "#FF5722" }}>Link</span>
+            Ref-M-<span style={{ color: "#FF5722" }}>Link</span>
           </span>
         </a>
 
@@ -958,7 +968,7 @@ function Footer() {
           {[
             { label: "GitHub", href: "https://github.com/liliankavengi/refulink" },
             { label: "Architecture", href: "https://github.com/liliankavengi/refulink/blob/main/docs/architecture.md" },
-            { label: "API Reference", href: "https://github.com/liliankavengi/refulink/blob/main/docs/api-reference.md" },
+            { label: "WhatsApp", href: "https://wa.me/254715516715" },
           ].map((l) => (
             <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="nav-link" style={{ fontSize: "0.82rem" }}>
               {l.label}
@@ -968,10 +978,49 @@ function Footer() {
 
         {/* Copy */}
         <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.25)", fontSize: "0.78rem" }}>
-          © 2024 RefuLink. MIT License.
+          © 2026 Ref-M-Link. MIT License.
         </p>
       </div>
     </footer>
+  );
+}
+
+// ─── WhatsApp Float ────────────────────────────────────────────────────────────
+function WhatsAppFloat() {
+  return (
+    <a
+      href="https://wa.me/254715516715"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+      style={{
+        position: "fixed",
+        bottom: "2rem",
+        right: "2rem",
+        zIndex: 200,
+        width: "52px",
+        height: "52px",
+        borderRadius: "50%",
+        background: "#25D366",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 4px 20px rgba(37,211,102,0.4)",
+        transition: "transform 200ms ease, box-shadow 200ms ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "scale(1.1)";
+        e.currentTarget.style.boxShadow = "0 6px 28px rgba(37,211,102,0.55)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,0.4)";
+      }}
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
   );
 }
 
@@ -988,6 +1037,7 @@ export default function Home() {
       <Waitlist />
       <CTABanner />
       <Footer />
+      <WhatsAppFloat />
     </div>
   );
 }

@@ -1,0 +1,74 @@
+# ── Disable directory listing ────────────────────────────────────────────────
+Options -Indexes -MultiViews
+
+# ── Security headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https://formspree.io https:; frame-ancestors 'none'"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # Remove headers that reveal server info
+  Header unset X-Powered-By
+  Header unset Server
+</IfModule>
+
+# ── Block access to sensitive files ──────────────────────────────────────────
+<FilesMatch "(^\.env|\.git|\.htpasswd|\.DS_Store|package\.json|package-lock\.json|yarn\.lock|tsconfig.*\.json|vite\.config\.*|README\.md)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Block source map files (prevents JS reverse-engineering)
+<FilesMatch "\.map$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ── Hotlink protection for images ─────────────────────────────────────────────
+# Replace yourdomain.com with your actual domain before deploying
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_REFERER} !^$
+  RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
+  RewriteRule \.(jpg|jpeg|png|gif|webp|svg|ico)$ - [F,NC,L]
+</IfModule>
+
+# ── SPA routing (all paths → index.html) ─────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ── Cache static assets aggressively (hashed filenames = safe) ───────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                "access plus 1 year"
+  ExpiresByType application/javascript  "access plus 1 year"
+  ExpiresByType image/webp              "access plus 1 year"
+  ExpiresByType image/png               "access plus 1 year"
+  ExpiresByType image/jpeg              "access plus 1 year"
+  ExpiresByType image/svg+xml           "access plus 1 year"
+  ExpiresByType font/woff2              "access plus 1 year"
+  ExpiresByType text/html               "access plus 0 seconds"
+</IfModule>
+
+# ── Gzip compression ─────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json font/woff2
+</IfModule>
+
+# ── Block common attack patterns ─────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+  RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+  RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+  RewriteRule .* - [F,L]
+</IfModule>
