@@ -17,40 +17,52 @@ const MISSION_IMG =
 // ─── Team data ─────────────────────────────────────────────────────────────────
 const TEAM = [
   {
-    login: "liliankavengi",
+    id: "lilian-kavengi",
     name: "Lilian Kavengi",
     role: "Founder & Visionary",
-    contributions: 55,
-    avatar: "https://avatars.githubusercontent.com/u/122858862?v=4",
-    github: "https://github.com/liliankavengi",
-    bio: "Architect of Ref-M-Link's mission. Driving financial inclusion for refugees through blockchain-powered identity verification and mobile money integration.",
+    bio: "Architect of Ref-M-Link's mission. Driving financial inclusion for refugees/asylum seekers through blockchain-powered identity verification and mobile money integration.",
   },
   {
-    login: "ben397",
+    id: "benjamin-m",
     name: "Benjamin M",
     role: "Lead Engineer",
-    contributions: 33,
-    avatar: "https://avatars.githubusercontent.com/u/64592036?v=4",
-    github: "https://github.com/ben397",
     bio: "Building the backbone of Ref-M-Link. Full-stack expertise in Stellar integration, M-Pesa bridge architecture, and production-grade backend systems.",
   },
   {
-    login: "Tums2060",
+    id: "tumaini-wekesa",
     name: "Tumaini Wekesa",
     role: "Core Developer",
-    contributions: 5,
-    avatar: "https://avatars.githubusercontent.com/u/162110179?v=4",
-    github: "https://github.com/Tums2060",
     bio: "Solving real-world problems with clean, purposeful code. Focused on smart contract implementation and on-chain identity verification.",
   },
   {
-    login: "Joygloria334",
+    id: "joy-gloria",
     name: "Joy Gloria",
     role: "Community Champion",
-    contributions: 3,
-    avatar: "https://avatars.githubusercontent.com/u/224504936?v=4",
-    github: "https://github.com/Joygloria334",
-    bio: "Championing the mission of financial inclusion. Connecting Ref-M-Link with refugee communities and ensuring the platform serves real needs.",
+    bio: "Championing the mission of financial inclusion. Connecting Ref-M-Link with refugee/asylum seeker communities and ensuring the platform serves real needs.",
+  },
+  {
+    id: "placeholder-ux",
+    name: "Coming Soon",
+    role: "UI/UX Designer",
+    bio: "Shaping the visual language of financial inclusion — designing intuitive interfaces that make blockchain-powered identity accessible to every user.",
+  },
+  {
+    id: "placeholder-pm",
+    name: "Coming Soon",
+    role: "Product Manager",
+    bio: "Translating community needs into product decisions. Driving the roadmap so Ref-M-Link reaches and serves every refugee/asylum seeker it can.",
+  },
+  {
+    id: "placeholder-sec",
+    name: "Coming Soon",
+    role: "Security Engineer",
+    bio: "Hardening the platform end-to-end. Ensuring every identity record, wallet, and M-Pesa transaction meets the highest security standards.",
+  },
+  {
+    id: "placeholder-devops",
+    name: "Coming Soon",
+    role: "DevOps Engineer",
+    bio: "Scaling the Stellar and M-Pesa infrastructure to serve hundreds of thousands of refugees/asylum seekers across Kenya and beyond.",
   },
 ];
 
@@ -59,12 +71,12 @@ const FEATURES = [
   {
     icon: "◈",
     title: "RIN Verification",
-    desc: "Refugee Identification Number (RIN) hashed on-chain via Soroban smart contracts — a tamper-proof digital identity that travels with the individual.",
+    desc: "Individual number (RIN) hashed on-chain via Soroban smart contracts — a tamper-proof digital identity that travels with the individual.",
   },
   {
     icon: "◎",
     title: "Stellar Wallet",
-    desc: "Every verified refugee receives a Stellar keypair. KES tokens are minted, transferred, and burned on the Stellar testnet with full Horizon auditability.",
+    desc: "Every verified refugee/asylum seeker receives a Stellar keypair. KES tokens are minted, transferred, and burned on the Stellar testnet with full Horizon auditability.",
   },
   {
     icon: "◉",
@@ -79,7 +91,7 @@ const FEATURES = [
   {
     icon: "◆",
     title: "Ambassador Vouching",
-    desc: "Trusted community ambassadors scan a QR code to vouch for a refugee's identity on the Stellar ledger, unlocking higher KYC tiers.",
+    desc: "Trusted community ambassadors scan a QR code to vouch for a refugee's/asylum seeker's identity on the Stellar ledger, unlocking higher KYC tiers.",
   },
   {
     icon: "◐",
@@ -349,7 +361,7 @@ function Hero() {
             marginBottom: "2.5rem",
           }}
         >
-          Ref-M-Link combines RIN identity verification, a Stellar blockchain wallet, and an M-Pesa bridge to give refugees in Kenya a trusted financial identity — and the credit to prove it.
+          Ref-M-Link combines RIN identity verification, a Stellar blockchain wallet, and an M-Pesa bridge to give refugees/asylum seekers in Kenya a trusted financial identity — and the credit to prove it.
         </p>
 
         {/* CTAs */}
@@ -440,14 +452,14 @@ function Mission() {
                   zIndex: 1,
                 }}
               >
-                A financial identity for every refugee.
+                A financial identity for every refugee/asylum seeker.
               </h2>
             </div>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontSize: "1rem", marginBottom: "1.25rem" }}>
-              Over 750,000 refugees live in Kenya. Most are excluded from formal banking because they lack the documentation that traditional institutions require. Ref-M-Link changes that.
+              Over 750,000 refugees/asylum seekers live in Kenya. Most are excluded from formal banking because they lack the documentation that traditional institutions require. Ref-M-Link changes that.
             </p>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontSize: "1rem", marginBottom: "2rem" }}>
-              By anchoring a refugee's Alien ID (RIN) to a Stellar blockchain identity and connecting it to M-Pesa, we create a verifiable, portable financial record that grows with every transaction.
+              By anchoring a refugee's/asylum seeker's Refugee ID/proof of registration (RIN) to a Stellar blockchain identity and connecting it to M-Pesa, we create a verifiable, portable financial record that grows with every transaction.
             </p>
             <a href="https://github.com/liliankavengi/refulink" target="_blank" rel="noopener noreferrer" className="btn-orange">
               Read the Docs
@@ -686,7 +698,7 @@ function Team() {
           className="team-grid"
         >
           {TEAM.map((member, i) => (
-            <TeamCard key={member.login} member={member} delay={i * 60} />
+            <TeamCard key={member.id} member={member} delay={i * 60} />
           ))}
         </div>
       </div>
@@ -720,53 +732,67 @@ function TeamCard({ member, delay }: { member: (typeof TEAM)[0]; delay: number }
     return () => observer.disconnect();
   }, [delay]);
 
+  /* Derive initials for the placeholder (max 2 chars) */
+  const initials = member.name === "Coming Soon"
+    ? "?"
+    : member.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+
   return (
     <div ref={ref} className="team-card fade-up">
-      {/* Avatar */}
+      {/* Photo placeholder */}
       <div style={{ marginBottom: "1.25rem" }}>
-        <img
-          src={member.avatar}
-          alt={member.name}
+        <div
           style={{
             width: "64px",
             height: "64px",
-            borderRadius: "0",
-            objectFit: "cover",
+            background: "rgba(255,87,34,0.07)",
             border: "2px solid rgba(255,87,34,0.3)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            overflow: "hidden",
           }}
-        />
+        >
+          {member.name === "Coming Soon" ? (
+            /* Silhouette icon for empty slots */
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="rgba(255,87,34,0.35)" />
+              <path
+                d="M4 20c0-4 3.582-7 8-7s8 3 8 7"
+                stroke="rgba(255,87,34,0.35)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          ) : (
+            /* Initials for real members */
+            <span
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 800,
+                fontSize: "1.1rem",
+                color: "rgba(255,87,34,0.7)",
+                letterSpacing: "0.05em",
+              }}
+            >
+              {initials}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Info */}
-      <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", marginBottom: "4px" }}>
+      <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "1rem", color: member.name === "Coming Soon" ? "rgba(255,255,255,0.3)" : "#fff", marginBottom: "4px" }}>
         {member.name}
       </h3>
-      <p style={{ fontFamily: "'Inter', sans-serif", color: "#FF5722", fontSize: "0.78rem", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "1rem" }}>
+      <p style={{ fontFamily: "'Inter', sans-serif", color: "#FF5722", fontSize: "0.78rem", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "1rem", opacity: member.name === "Coming Soon" ? 0.5 : 1 }}>
         {member.role}
       </p>
-      <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", lineHeight: 1.65, marginBottom: "1.25rem" }}>
+      <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", lineHeight: 1.65 }}>
         {member.bio}
       </p>
-
-      {/* Footer */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
-        <span className="mono" style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.72rem" }}>
-          {member.contributions} commits
-        </span>
-        <a
-          href={member.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "rgba(255,255,255,0.35)", transition: "color 180ms ease", textDecoration: "none" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#FF5722")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
-          aria-label={`${member.name} on GitHub`}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-          </svg>
-        </a>
-      </div>
     </div>
   );
 }
@@ -842,7 +868,7 @@ function Waitlist() {
               marginBottom: "2rem",
             }}
           >
-            Join the waitlist to be among the first refugees to access Ref-M-Link's financial identity and credit platform.
+            Join the waitlist to be among the first refugees/asylum seekers to access Ref-M-Link's financial identity and credit platform.
           </p>
 
           {/* Form */}
