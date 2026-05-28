@@ -642,3 +642,59 @@
 :root:not(.dark) .team-card .mono {
   color: rgba(10,10,10,0.3) !important;
 }
+
+/* ── Logo image — adaptive to dark and light mode ── */
+.logo-adaptive {
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+}
+
+.nav-logo {
+  height: 44px;
+  width: 44px;
+}
+
+.footer-logo {
+  height: 36px;
+  width: 36px;
+}
+
+/* Dark mode: depth shadow so the white circle reads as an intentional emblem */
+:root.dark .logo-adaptive {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.55);
+}
+
+/* Light mode: fine ring + soft shadow to define logo boundary on cream background */
+:root:not(.dark) .logo-adaptive {
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* ── GitHub profile link inside team card ── */
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.45rem 0.85rem;
+  transition: border-color 200ms ease, color 200ms ease;
+  letter-spacing: 0.04em;
+}
+.github-link:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
+}
+
+:root:not(.dark) .github-link {
+  color: rgba(10,10,10,0.5) !important;
+  border-color: rgba(10,10,10,0.12) !important;
+}
+:root:not(.dark) .github-link:hover {
+  color: rgba(10,10,10,0.85) !important;
+  border-color: rgba(10,10,10,0.3) !important;
+}

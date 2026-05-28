@@ -15,54 +15,64 @@ const MISSION_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663656534237/L9RbiUnPdm7kCNPYQPFhK3/refulink-mission-cKtbHp3V8M2CLzgLYvLepx.webp";
 
 // ─── Team data ─────────────────────────────────────────────────────────────────
-const TEAM = [
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  github?: string;
+}
+
+const TEAM: TeamMember[] = [
+  {
+    id: "peter-kubo",
+    name: "Peter Kubo",
+    role: "CEO",
+    bio: "Leading Ref-M-Link's vision and strategy to bridge displaced communities to financial inclusion across Africa.",
+  },
   {
     id: "lilian-kavengi",
     name: "Lilian Kavengi",
-    role: "Founder & Visionary",
-    bio: "Architect of Ref-M-Link's mission. Driving financial inclusion for refugees/asylum seekers through blockchain-powered identity verification and mobile money integration.",
+    role: "COO",
+    bio: "",
+    github: "liliankavengi",
   },
   {
-    id: "benjamin-m",
-    name: "Benjamin M",
-    role: "Lead Engineer",
-    bio: "Building the backbone of Ref-M-Link. Full-stack expertise in Stellar integration, M-Pesa bridge architecture, and production-grade backend systems.",
-  },
-  {
-    id: "tumaini-wekesa",
-    name: "Tumaini Wekesa",
-    role: "Core Developer",
-    bio: "Solving real-world problems with clean, purposeful code. Focused on smart contract implementation and on-chain identity verification.",
+    id: "benjamin-musee",
+    name: "Benjamin Musee",
+    role: "CTO",
+    bio: "",
+    github: "benjaminmusee",
   },
   {
     id: "joy-gloria",
     name: "Joy Gloria",
-    role: "Community Champion",
-    bio: "Championing the mission of financial inclusion. Connecting Ref-M-Link with refugee/asylum seeker communities and ensuring the platform serves real needs.",
+    role: "CFO",
+    bio: "Overseeing financial strategy and operations to ensure Ref-M-Link scales sustainably and responsibly.",
   },
   {
-    id: "placeholder-ux",
-    name: "Coming Soon",
-    role: "UI/UX Designer",
-    bio: "Shaping the visual language of financial inclusion — designing intuitive interfaces that make blockchain-powered identity accessible to every user.",
+    id: "luke-karama",
+    name: "Luke Karama",
+    role: "Legal Officer",
+    bio: "Navigating the legal and regulatory landscape of refugee finance and blockchain compliance across East Africa.",
   },
   {
-    id: "placeholder-pm",
-    name: "Coming Soon",
-    role: "Product Manager",
-    bio: "Translating community needs into product decisions. Driving the roadmap so Ref-M-Link reaches and serves every refugee/asylum seeker it can.",
+    id: "baraka-alain",
+    name: "Baraka Alain",
+    role: "Legal Officer",
+    bio: "Ensuring Ref-M-Link operates within cross-border legal frameworks and upholding the rights of displaced persons.",
   },
   {
-    id: "placeholder-sec",
-    name: "Coming Soon",
-    role: "Security Engineer",
-    bio: "Hardening the platform end-to-end. Ensuring every identity record, wallet, and M-Pesa transaction meets the highest security standards.",
+    id: "charity-waweru",
+    name: "Charity Waweru",
+    role: "CMO",
+    bio: "Building brand awareness and community partnerships to connect displaced people with Ref-M-Link's platform.",
   },
   {
-    id: "placeholder-devops",
-    name: "Coming Soon",
-    role: "DevOps Engineer",
-    bio: "Scaling the Stellar and M-Pesa infrastructure to serve hundreds of thousands of refugees/asylum seekers across Kenya and beyond.",
+    id: "tumaini-wekesa",
+    name: "Tumaini Wekesa",
+    role: "CIO",
+    bio: "Overseeing information systems and the technology infrastructure powering Ref-M-Link's operations.",
   },
 ];
 
@@ -180,11 +190,8 @@ function Nav() {
     >
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}>
         {/* Logo */}
-        <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          <span style={{ display: "block", width: "4px", height: "28px", background: "#FF5722", flexShrink: 0 }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "1.25rem", color: "#fff", letterSpacing: "0.02em" }}>
-            Ref-M-<span style={{ color: "#FF5722" }}>Link</span>
-          </span>
+        <a href="#" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <img src="/logo.png" alt="Ref-M-Link" className="logo-adaptive nav-logo" />
         </a>
 
         {/* Desktop nav */}
@@ -714,7 +721,7 @@ function Team() {
   );
 }
 
-function TeamCard({ member, delay }: { member: (typeof TEAM)[0]; delay: number }) {
+function TeamCard({ member, delay }: { member: TeamMember; delay: number }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -732,10 +739,7 @@ function TeamCard({ member, delay }: { member: (typeof TEAM)[0]; delay: number }
     return () => observer.disconnect();
   }, [delay]);
 
-  /* Derive initials for the placeholder (max 2 chars) */
-  const initials = member.name === "Coming Soon"
-    ? "?"
-    : member.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+  const initials = member.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
 
   return (
     <div ref={ref} className="team-card fade-up">
@@ -754,45 +758,44 @@ function TeamCard({ member, delay }: { member: (typeof TEAM)[0]; delay: number }
             overflow: "hidden",
           }}
         >
-          {member.name === "Coming Soon" ? (
-            /* Silhouette icon for empty slots */
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="8" r="4" fill="rgba(255,87,34,0.35)" />
-              <path
-                d="M4 20c0-4 3.582-7 8-7s8 3 8 7"
-                stroke="rgba(255,87,34,0.35)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
-          ) : (
-            /* Initials for real members */
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 800,
-                fontSize: "1.1rem",
-                color: "rgba(255,87,34,0.7)",
-                letterSpacing: "0.05em",
-              }}
-            >
-              {initials}
-            </span>
-          )}
+          <span
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 800,
+              fontSize: "1.1rem",
+              color: "rgba(255,87,34,0.7)",
+              letterSpacing: "0.05em",
+            }}
+          >
+            {initials}
+          </span>
         </div>
       </div>
 
       {/* Info */}
-      <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "1rem", color: member.name === "Coming Soon" ? "rgba(255,255,255,0.3)" : "#fff", marginBottom: "4px" }}>
+      <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", marginBottom: "4px" }}>
         {member.name}
       </h3>
-      <p style={{ fontFamily: "'Inter', sans-serif", color: "#FF5722", fontSize: "0.78rem", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "1rem", opacity: member.name === "Coming Soon" ? 0.5 : 1 }}>
+      <p style={{ fontFamily: "'Inter', sans-serif", color: "#FF5722", fontSize: "0.78rem", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "1rem" }}>
         {member.role}
       </p>
-      <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", lineHeight: 1.65 }}>
-        {member.bio}
-      </p>
+      {member.github ? (
+        <a
+          href={`https://github.com/${member.github}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-link"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          View GitHub
+        </a>
+      ) : (
+        <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", lineHeight: 1.65 }}>
+          {member.bio}
+        </p>
+      )}
     </div>
   );
 }
@@ -982,11 +985,8 @@ function Footer() {
     <footer style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.07)", padding: "3rem 0" }}>
       <div className="container footer-inner">
         {/* Logo */}
-        <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          <span style={{ display: "block", width: "3px", height: "22px", background: "#FF5722" }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "1rem", color: "#fff" }}>
-            Ref-M-<span style={{ color: "#FF5722" }}>Link</span>
-          </span>
+        <a href="#" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <img src="/logo.png" alt="Ref-M-Link" className="logo-adaptive footer-logo" />
         </a>
 
         {/* Links */}
