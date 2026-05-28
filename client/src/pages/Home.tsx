@@ -191,7 +191,7 @@ function Nav() {
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}>
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo.png" alt="Ref-M-Link" className="logo-adaptive nav-logo" />
+          <img src="/logo.jpeg" alt="Ref-M-Link" className="logo-adaptive nav-logo" />
         </a>
 
         {/* Desktop nav */}
@@ -986,7 +986,7 @@ function Footer() {
       <div className="container footer-inner">
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo.png" alt="Ref-M-Link" className="logo-adaptive footer-logo" />
+          <img src="/logo.jpeg" alt="Ref-M-Link" className="logo-adaptive footer-logo" />
         </a>
 
         {/* Links */}

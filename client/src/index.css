@@ -652,13 +652,13 @@
 }
 
 .nav-logo {
-  height: 44px;
-  width: 44px;
+  height: 72px;
+  width: 72px;
 }
 
 .footer-logo {
-  height: 36px;
-  width: 36px;
+  height: 56px;
+  width: 56px;
 }
 
 /* Dark mode: depth shadow so the white circle reads as an intentional emblem */
